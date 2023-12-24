@@ -1,26 +1,41 @@
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
-    NavMeshAgent agent;
-    Animator anim;
-    public Transform player;
-    State currentState;
-    // Start is called before the first frame update
+    #region FIELDS
+    
+    [Header("Fields")]
+    [SerializeField] private AnimationController animationController;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Transform player;
+    
+    private Animator _anim;
+    private State _currentState;
+    
+    #endregion
+
+    #region VARIABLES
+
+    [Header("Variables")]
+    [SerializeField] private float visDistance = 10.0f;
+    [SerializeField] private float visAngle = 50.0f;
+    [SerializeField] private float shootDistance = 7.0f;
+
+    #endregion
+
+    #region UNITY FUNCTIONS
+
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
-        currentState = new Idle(gameObject, agent, anim, player);
+        _currentState = new Idle(gameObject, agent, animationController, player);
+        _currentState.SetVariables(visDistance, visAngle, shootDistance);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        currentState = currentState.Process();
+        _currentState = _currentState.Process();
     }
+
+    #endregion
 }

@@ -1,0 +1,4 @@
+public enum STATE
+{
+    IDLE, PATROL, PURSUE, ATTACK, SLEEP
+};
